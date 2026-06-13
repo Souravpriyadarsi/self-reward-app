@@ -24,7 +24,7 @@ function RewardCard({ reward }: RewardCardProps) {
       <button
         onClick={() => buyReward(reward.id)}
         disabled={balance < reward.cost}
-        className="bg-purple-600 px-4 py-2 rounded-lg hover:bg-purple-700 disabled:bg-gray-700 disabled:cursor-not-allowed transition"
+        className="bg-purple-600 px-4 py-2 rounded-lg cursor-pointer hover:bg-purple-700 disabled:bg-gray-700 disabled:cursor-not-allowed transition"
       >
         Buy
       </button>
