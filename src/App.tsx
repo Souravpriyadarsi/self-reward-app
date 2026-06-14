@@ -6,6 +6,7 @@ import Settings from "./pages/Settings";
 import History from "./pages/History";
 import Calendar from "./pages/Calendar";
 import Achievements from "./pages/Achievements";
+import "./App.css";
 
 function App() {
   return (

@@ -107,7 +107,7 @@ function Calendar() {
 
         <div className="flex gap-3">
           {/* Weekday Labels */}
-          <div className="flex flex-col gap-[4px] text-xs text-slate-500">
+          <div className="flex flex-col gap-1 text-xs text-slate-500">
             <div className="w-6 h-4 flex items-center">Sun</div>
             <div className="w-6 h-4 flex items-center">Mon</div>
             <div className="w-6 h-4 flex items-center">Tue</div>
@@ -119,9 +119,9 @@ function Calendar() {
 
           {/* Heatmap */}
           <div className="overflow-visible">
-            <div className="inline-flex gap-[4px]">
+            <div className="inline-flex gap-1">
               {Array.from({ length: 53 }).map((_, weekIndex) => (
-                <div key={weekIndex} className="flex flex-col gap-[4px]">
+                <div key={weekIndex} className="flex flex-col gap-1">
                   {Array.from({ length: 7 }).map((_, dayIndex) => {
                     const dateIndex = weekIndex * 7 + dayIndex;
 

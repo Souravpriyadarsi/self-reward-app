@@ -8,30 +8,26 @@ function BalanceCard() {
   const progress = xp % 100;
 
   return (
-    <div className="grid md:grid-cols-2 gap-4 mb-8">
-      <div className="rounded-xl bg-slate-900 p-6">
-        <h2 className="text-2xl font-semibold">{balance} Coins</h2>
-
-        <p className="text-slate-400">Available Balance</p>
+    <div className="balance-grid">
+      {/* Wallet Card */}
+      <div className="glass-card wallet-card">
+        <p className="card-label">Wallet</p>
+        <h2 className="balance-value">{balance}</h2>
+        <p className="muted-text">Coins available</p>
       </div>
 
-      <div className="rounded-xl bg-slate-900 p-6">
-        <h2 className="text-2xl font-semibold">Level {level}</h2>
+      {/* XP Card */}
+      <div className="glass-card xp-card">
+        <p className="card-label">Level</p>
+        <h2 className="level-value">Level {level}</h2>
 
-        <p className="text-slate-400 mb-3">{xp} XP</p>
+        <p className="muted-text xp-text">{xp} XP Total</p>
 
-        <div className="w-full bg-slate-800 rounded-full h-3">
-          <div
-            className="bg-blue-500 h-3 rounded-full transition-all duration-500"
-            style={{
-              width: `${progress}%`,
-            }}
-          />
+        <div className="xp-bar">
+          <div className="xp-fill" style={{ width: `${progress}%` }} />
         </div>
 
-        <p className="text-xs text-slate-500 mt-2">
-          {progress}/100 XP to next level
-        </p>
+        <p className="xp-footer">{progress}/100 XP to next level</p>
       </div>
     </div>
   );

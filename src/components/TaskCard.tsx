@@ -13,21 +13,19 @@ function TaskCard({ task }: TaskCardProps) {
   const completeTask = useAppStore((state) => state.completeTask);
 
   return (
-    <div className="bg-slate-900 rounded-xl p-4 flex justify-between items-center">
+    <div className={`task-card ${task.completed ? "completed" : ""}`}>
       <div>
-        <h3 className="font-medium">{task.title}</h3>
+        <h3 className="task-title">{task.title}</h3>
 
-        <p className="text-slate-400">+{task.points} Coins & XP</p>
+        <p className="task-meta">+{task.points} Coins & XP</p>
       </div>
 
       <button
         disabled={task.completed}
         onClick={() => completeTask(task.id)}
-        className={`px-4 py-2 rounded-lg transition ${
-          task.completed ? "bg-gray-700" : "bg-green-600 hover:bg-green-700"
-        }`}
+        className={`task-btn ${task.completed ? "done" : "active"}`}
       >
-        {task.completed ? "Completed" : "Complete"}
+        {task.completed ? "Done" : "Complete"}
       </button>
     </div>
   );
