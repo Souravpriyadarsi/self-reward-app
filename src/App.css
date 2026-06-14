@@ -3,16 +3,16 @@
 ========================= */
 :root {
   --bg: #070712;
-  --glass: rgba(255, 255, 255, 0.06);
-  --glass-strong: rgba(255, 255, 255, 0.08);
-  --border: rgba(255, 255, 255, 0.1);
+  --glass: #0f1117;
+  --glass-strong: #10141b;
+  --border: #1a1f2e;
 
   --text: #e5e7eb;
   --muted: #94a3b8;
 
   --accent: #a855f7;
   --accent-2: #c084fc;
-  --glow: rgba(168, 85, 247, 0.35);
+  --glow: #6d3fa8;
 }
 
 /* =========================
@@ -20,14 +20,7 @@
 ========================= */
 body {
   margin: 0;
-  background:
-    radial-gradient(circle at top, rgba(168, 85, 247, 0.18), transparent 40%),
-    radial-gradient(
-      circle at bottom,
-      rgba(56, 189, 248, 0.08),
-      transparent 60%
-    ),
-    var(--bg);
+  background: var(--bg);
 
   color: var(--text);
   font-family:
@@ -84,11 +77,8 @@ body {
   text-decoration: none;
   color: var(--text);
 
-  background: var(--glass);
-  border: 1px solid var(--border);
-
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: #1a1a2e;
+  border: 1px solid #2a2a3e;
 
   box-shadow:
     6px 6px 16px rgba(0, 0, 0, 0.4),
@@ -105,16 +95,16 @@ body {
 
 /* subtle accent variants */
 .nav-btn.purple {
-  border-color: rgba(168, 85, 247, 0.4);
+  border-color: #6741c0;
 }
 .nav-btn.blue {
-  border-color: rgba(59, 130, 246, 0.4);
+  border-color: #1a4b96;
 }
 .nav-btn.yellow {
-  border-color: rgba(234, 179, 8, 0.4);
+  border-color: #785404;
 }
 .nav-btn.slate {
-  border-color: rgba(148, 163, 184, 0.2);
+  border-color: #3d4655;
 }
 
 /* =========================
@@ -143,8 +133,8 @@ body {
 
   padding: 24px;
 
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 
   box-shadow:
     0 10px 30px rgba(0, 0, 0, 0.4),
@@ -157,7 +147,7 @@ body {
 
 .card:hover {
   transform: translateY(-3px);
-  border-color: rgba(168, 85, 247, 0.5);
+  border-color: #5c3fa8;
 
   box-shadow:
     0 15px 40px rgba(0, 0, 0, 0.55),
@@ -215,14 +205,14 @@ body {
 
 /* Shared glass card (reuse-friendly) */
 .glass-card {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #0f1117;
+  border: 1px solid #1a1f2e;
   border-radius: 18px;
 
   padding: 20px;
 
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 
   box-shadow:
     0 10px 30px rgba(0, 0, 0, 0.4),
@@ -233,8 +223,7 @@ body {
 
 .glass-card:hover {
   transform: translateY(-3px);
-  border-color: rgba(168, 85, 247, 0.5);
-  box-shadow: 0 0 25px rgba(168, 85, 247, 0.25);
+  border-color: #5c3fa8;
 }
 
 /* Labels */
@@ -273,10 +262,10 @@ body {
   width: 100%;
   height: 10px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
+  background: #0f1117;
   overflow: hidden;
 
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid #10141b;
 }
 
 .xp-fill {
@@ -311,11 +300,8 @@ body {
   padding: 16px 18px;
   border-radius: 16px;
 
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: #111827;
+  border: 1px solid #1f2937;
 
   box-shadow:
     0 10px 25px rgba(0, 0, 0, 0.35),
@@ -326,8 +312,7 @@ body {
 
 .reward-card:hover {
   transform: translateY(-3px);
-  border-color: rgba(168, 85, 247, 0.5);
-  box-shadow: 0 0 25px rgba(168, 85, 247, 0.25);
+  border-color: #5c3fa8;
 }
 
 /* Text styles */
@@ -372,7 +357,7 @@ body {
 
 /* Disabled state */
 .reward-btn.disabled {
-  background: rgba(148, 163, 184, 0.15);
+  background: #495366;
   color: #64748b;
   cursor: not-allowed;
   opacity: 0.7;
@@ -386,8 +371,8 @@ body {
 
   padding: 20px;
 
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #0f1117;
+  border: 1px solid #1a1f2e;
 
   border-radius: 18px;
 
@@ -424,11 +409,8 @@ body {
   padding: 16px 18px;
   border-radius: 16px;
 
-  background: rgba(82, 82, 82, 0.06);
-  border: 1px solid rgba(85, 85, 85, 0.1);
-
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: #111827;
+  border: 1px solid #1f2937;
 
   box-shadow:
     0 10px 25px rgba(0, 0, 0, 0.35),
@@ -439,8 +421,7 @@ body {
 
 .task-card:hover {
   transform: translateY(-3px);
-  border-color: rgba(168, 85, 247, 0.4);
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+  border-color: #6741c0;
 }
 
 /* Completed state */
@@ -491,7 +472,7 @@ body {
 
 /* Completed button */
 .task-btn.done {
-  background: rgba(148, 163, 184, 0.15);
+  background: #495366;
   color: #94a3b8;
   cursor: not-allowed;
 }
@@ -500,8 +481,8 @@ body {
 ========================= */
 
 .xp-graph-card {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #0f1117;
+  border: 1px solid #1a1f2e;
 
   border-radius: 18px;
   padding: 20px;
@@ -518,8 +499,7 @@ body {
 
 .xp-graph-card:hover {
   transform: translateY(-3px);
-  border-color: rgba(168, 85, 247, 0.5);
-  box-shadow: 0 0 25px rgba(168, 85, 247, 0.25);
+  border-color: #5c3fa8;
 }
 
 /* Title */
@@ -540,8 +520,8 @@ body {
 ========================= */
 
 .xp-tooltip {
-  background: rgba(15, 23, 42, 0.9);
-  border: 1px solid rgba(168, 85, 247, 0.3);
+  background: #0f172a;
+  border: 1px solid #7a52d5;
   border-radius: 12px;
 
   padding: 10px 12px;
@@ -576,8 +556,8 @@ body {
   padding: 18px 20px;
   border-radius: 18px;
 
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #0f1117;
+  border: 1px solid #1a1f2e;
 
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -591,8 +571,7 @@ body {
 
 .streak-card:hover {
   transform: translateY(-3px);
-  border-color: rgba(168, 85, 247, 0.5);
-  box-shadow: 0 0 25px rgba(168, 85, 247, 0.25);
+  border-color: #5c3fa8;
 }
 
 .streak-icon {
@@ -610,4 +589,3 @@ body {
   color: #94a3b8;
   margin-top: 2px;
 }
-
