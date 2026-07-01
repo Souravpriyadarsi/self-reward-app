@@ -1,5 +1,5 @@
+import Navbar from "../components/Navbar";
 import { useAppStore } from "../store/useAppStore";
-import { Link } from "react-router-dom";
 
 function Achievements() {
   const achievements = useAppStore((state) => state.achievements);
@@ -8,39 +8,78 @@ function Achievements() {
     (achievement) => achievement.unlocked,
   ).length;
 
+  const progress =
+    achievements.length > 0
+      ? Math.round((unlockedCount / achievements.length) * 100)
+      : 0;
+
   return (
-    <div className="min-h-screen bg-slate-950 text-white p-8">
-      <div className="flex justify-between mb-6">
-        <h1 className="text-4xl font-bold mb-2">Achievements</h1>
-        <Link to="/" className="bg-slate-700 px-4 py-2 rounded-lg">
-          Dashboard
-        </Link>{" "}
+    <div className="app-shell">
+      <Navbar />
+
+      <div className="page-header">
+        <div>
+          <h1 className="page-title">Achievements</h1>
+
+          <p className="page-subtitle">
+            Unlock milestones and build your LifeXP legacy.
+          </p>
+        </div>
       </div>
 
-      <p className="text-slate-400 mb-8">
-        {unlockedCount} / {achievements.length} unlocked
-      </p>
+      {/* Progress Card */}
 
-      <div className="space-y-4">
+      <div className="achievement-summary">
+        <div>
+          <h2 className="achievement-summary-title">
+            {unlockedCount} / {achievements.length}
+          </h2>
+
+          <p className="muted-text">Achievements Unlocked</p>
+        </div>
+
+        <div className="achievement-progress">
+          <div
+            className="achievement-progress-fill"
+            style={{
+              width: `${progress}%`,
+            }}
+          />
+        </div>
+
+        <p className="achievement-progress-text">{progress}% Complete</p>
+      </div>
+
+      {/* Achievement Grid */}
+
+      <div className="achievement-grid">
         {achievements.map((achievement) => (
           <div
             key={achievement.id}
-            className={`rounded-xl p-5 border ${
+            className={`achievement-card ${
               achievement.unlocked
-                ? "bg-green-900 border-green-600"
-                : "bg-slate-900 border-slate-800"
+                ? "achievement-unlocked"
+                : "achievement-locked"
             }`}
           >
-            <div className="flex items-center gap-3">
-              <span className="text-2xl">
-                {achievement.unlocked ? "🏆" : "🔒"}
+            <div className="achievement-icon">
+              {achievement.unlocked ? "🏆" : "🔒"}
+            </div>
+
+            <div className="achievement-content">
+              <h2 className="achievement-title">{achievement.title}</h2>
+
+              <p className="achievement-description">
+                {achievement.description}
+              </p>
+
+              <span
+                className={`achievement-badge ${
+                  achievement.unlocked ? "badge-unlocked" : "badge-locked"
+                }`}
+              >
+                {achievement.unlocked ? "Unlocked" : "Locked"}
               </span>
-
-              <div>
-                <h2 className="text-xl font-semibold">{achievement.title}</h2>
-
-                <p className="text-slate-300">{achievement.description}</p>
-              </div>
             </div>
           </div>
         ))}

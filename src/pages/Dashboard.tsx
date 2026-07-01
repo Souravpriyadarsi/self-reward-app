@@ -4,10 +4,14 @@ import TaskCard from "../components/TaskCard";
 import XPGraph from "../components/XPGraph";
 import StreakCard from "../components/StreakCard";
 import { useAppStore } from "../store/useAppStore";
-import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 function Dashboard() {
   const tasks = useAppStore((state) => state.tasks);
+
+  const dailyTasks = tasks.filter((task) => task.type === "daily");
+
+  const repeatableTasks = tasks.filter((task) => task.type === "repeatable");
   const checkDailyReset = useAppStore((state) => state.checkDailyReset);
 
   useEffect(() => {
@@ -16,25 +20,7 @@ function Dashboard() {
 
   return (
     <div className="app-shell">
-      {/* Header */}
-      <header className="dashboard-header">
-        <h1 className="app-title">LifeXP</h1>
-
-        <nav className="nav-links">
-          <Link to="/rewards" className="nav-btn purple">
-            Rewards
-          </Link>
-          <Link to="/settings" className="nav-btn slate">
-            Settings
-          </Link>
-          <Link to="/calendar" className="nav-btn blue">
-            Calendar
-          </Link>
-          <Link to="/achievements" className="nav-btn yellow">
-            Achievements
-          </Link>
-        </nav>
-      </header>
+      <Navbar />
 
       {/* Top Section */}
       <BalanceCard />
@@ -44,11 +30,25 @@ function Dashboard() {
       </div>
 
       {/* Tasks */}
+      {/* Daily Tasks */}
+
       <section className="tasks-section">
-        <h2 className="section-title">Daily Tasks</h2>
+        <h2 className="section-title">📅 Daily Tasks</h2>
 
         <div className="task-list">
-          {tasks.map((task) => (
+          {dailyTasks.map((task) => (
+            <TaskCard key={task.id} task={task} />
+          ))}
+        </div>
+      </section>
+
+      {/* Repeatable */}
+
+      <section className="tasks-section">
+        <h2 className="section-title">🔁 Repeatable Tasks</h2>
+
+        <div className="task-list">
+          {repeatableTasks.map((task) => (
             <TaskCard key={task.id} task={task} />
           ))}
         </div>

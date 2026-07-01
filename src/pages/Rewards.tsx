@@ -1,25 +1,29 @@
-import { Link } from "react-router-dom";
 import RewardCard from "../components/RewardCard";
 import { useAppStore } from "../store/useAppStore";
+import Navbar from "../components/Navbar";
 
 function Rewards() {
   const rewards = useAppStore((state) => state.rewards);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white p-8">
-      <div className="flex justify-between mb-6">
-        <h1 className="text-5xl font-bold">Rewards Store</h1>
+    <div className="app-shell">
+      <Navbar />
+      <header className="page-header">
+        <div>
+          <h1 className="page-title">Rewards Store</h1>
+          <p className="page-subtitle">Spend your hard-earned LifeXP coins.</p>
+        </div>
+      </header>
 
-        <Link to="/" className="bg-slate-700 px-4 py-2 rounded-lg">
-          Dashboard
-        </Link>
-      </div>
+      <section className="rewards-section">
+        <h2 className="section-title">Available Rewards</h2>
 
-      <div className="space-y-3">
-        {rewards.map((reward) => (
-          <RewardCard key={reward.id} reward={reward} />
-        ))}
-      </div>
+        <div className="reward-list">
+          {rewards.map((reward) => (
+            <RewardCard key={reward.id} reward={reward} />
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

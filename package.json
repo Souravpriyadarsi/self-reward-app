@@ -10,7 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.107.0",
+    "@capacitor/android": "^8.4.1",
+    "@capacitor/cli": "^8.4.1",
+    "@capacitor/core": "^8.4.1",
+    "@emotion/react": "^11.14.0",
+    "@mantine/core": "^9.4.1",
+    "@mantine/hooks": "^9.4.1",
     "@tailwindcss/vite": "^4.3.0",
     "date-fns": "^4.4.0",
     "lucide-react": "^1.17.0",

@@ -1,11 +1,17 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { useUIStore } from "./useUIStore";
 
 export interface Task {
   id: string;
   title: string;
   points: number;
+
+  type: "daily" | "repeatable";
+
   completed: boolean;
+
+  completionCount: number;
 }
 
 export interface Reward {
@@ -45,11 +51,20 @@ interface AppState {
   completeTask: (id: string) => void;
   resetTasks: () => void;
   buyReward: (id: string) => void;
-  addTask: (title: string, points: number) => void;
+  addTask: (
+    title: string,
+    points: number,
+    type: "daily" | "repeatable",
+  ) => void;
   deleteTask: (id: string) => void;
   addReward: (title: string, cost: number) => void;
   deleteReward: (id: string) => void;
-  editTask: (id: string, title: string, points: number) => void;
+  editTask: (
+    id: string,
+    title: string,
+    points: number,
+    type: "daily" | "repeatable",
+  ) => void;
   editReward: (id: string, title: string, cost: number) => void;
   unlockAchievement: (id: string) => void;
   checkDailyReset: () => void;
@@ -73,18 +88,32 @@ export const useAppStore = create<AppState>()(
           title: "Workout",
           points: 25,
           completed: false,
+          type: "daily",
+          completionCount: 0,
         },
         {
           id: "2",
           title: "Read 30 Minutes",
           points: 15,
           completed: false,
+          type: "repeatable",
+          completionCount: 0,
         },
         {
           id: "3",
           title: "Clean Room",
           points: 10,
           completed: false,
+          type: "daily",
+          completionCount: 0,
+        },
+        {
+          id: "4",
+          title: "Push-ups",
+          points: 15,
+          completed: false,
+          type: "repeatable",
+          completionCount: 0,
         },
       ],
 
@@ -143,7 +172,11 @@ export const useAppStore = create<AppState>()(
         set((state) => {
           const task = state.tasks.find((t) => t.id === id);
 
-          if (!task || task.completed) return state;
+          if (!task) return state;
+
+          if (task.type === "daily" && task.completed) {
+            return state;
+          }
 
           const today = new Date().toLocaleDateString("en-CA");
           const yesterday = new Date();
@@ -161,8 +194,10 @@ export const useAppStore = create<AppState>()(
             newStreak = 1;
           }
           const newBalance = state.balance + task.points;
+          const oldLevel = Math.floor(state.xp / 100) + 1;
           const newXP = state.xp + task.points;
           const newLevel = Math.floor(newXP / 100) + 1;
+
           const updatedAchievements = state.achievements.map((achievement) => {
             switch (achievement.id) {
               case "first-task":
@@ -193,20 +228,35 @@ export const useAppStore = create<AppState>()(
                 return achievement;
             }
           });
+          const showToast = useUIStore.getState().showToast;
+
+          showToast({
+            type: "success",
+            title: "Task Completed",
+            description: `${task.title} • +${task.points} XP`,
+          });
+          if (newLevel > oldLevel) {
+            showToast({
+              type: "achievement",
+              title: "Level Up!",
+              description: `Reached Level ${newLevel}`,
+            });
+          }
 
           return {
             currentStreak: newStreak,
             bestStreak: Math.max(state.bestStreak, newStreak),
             lastCompletedDate: today,
             balance: state.balance + task.points,
-            xp: state.xp + task.points,
+            xp: newXP,
             achievements: updatedAchievements,
 
             tasks: state.tasks.map((t) =>
               t.id === id
                 ? {
                     ...t,
-                    completed: true,
+                    completed: t.type === "daily" ? true : false,
+                    completionCount: t.completionCount + 1,
                   }
                 : t,
             ),
@@ -228,6 +278,7 @@ export const useAppStore = create<AppState>()(
           tasks: state.tasks.map((task) => ({
             ...task,
             completed: false,
+            completionCount: 0,
           })),
         })),
 
@@ -247,13 +298,20 @@ export const useAppStore = create<AppState>()(
                 }
               : achievement,
           );
+          const showToast = useUIStore.getState().showToast;
+
+          showToast({
+            type: "reward",
+            title: "Reward Purchased",
+            description: reward.title,
+          });
 
           return {
             balance: state.balance - reward.cost,
             achievements: updatedAchievements,
           };
         }),
-      addTask: (title, points) =>
+      addTask: (title, points, type) =>
         set((state) => ({
           tasks: [
             ...state.tasks,
@@ -261,7 +319,9 @@ export const useAppStore = create<AppState>()(
               id: Date.now().toString(),
               title,
               points,
+              type,
               completed: false,
+              completionCount: 0,
             },
           ],
         })),
@@ -269,10 +329,17 @@ export const useAppStore = create<AppState>()(
         set((state) => ({
           tasks: state.tasks.filter((task) => task.id !== id),
         })),
-      editTask: (id, title, points) =>
+      editTask: (id, title, points, type) =>
         set((state) => ({
           tasks: state.tasks.map((task) =>
-            task.id === id ? { ...task, title, points } : task,
+            task.id === id
+              ? {
+                  ...task,
+                  title,
+                  points,
+                  type,
+                }
+              : task,
           ),
         })),
       addReward: (title, cost) =>
@@ -297,13 +364,30 @@ export const useAppStore = create<AppState>()(
           ),
         })),
       unlockAchievement: (id) =>
-        set((state) => ({
-          achievements: state.achievements.map((achievement) =>
-            achievement.id === id
-              ? { ...achievement, unlocked: true }
-              : achievement,
-          ),
-        })),
+        set((state) => {
+          const showToast = useUIStore.getState().showToast;
+
+          const achievements = state.achievements.map((achievement) => {
+            if (achievement.id !== id) return achievement;
+
+            // Already unlocked? Don't show another toast.
+            if (achievement.unlocked) return achievement;
+
+            showToast({
+              type: "achievement",
+              title: "Achievement Unlocked!",
+              description: achievement.title,
+            });
+
+            return {
+              ...achievement,
+              unlocked: true,
+            };
+          });
+
+          return { achievements };
+        }),
+
       checkDailyReset: () =>
         set((state) => {
           const today = new Date().toLocaleDateString("en-CA");
@@ -316,6 +400,7 @@ export const useAppStore = create<AppState>()(
             tasks: state.tasks.map((task) => ({
               ...task,
               completed: false,
+              completionCount: 0,
             })),
           };
         }),
