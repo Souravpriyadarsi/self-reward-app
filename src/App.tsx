@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
 
+import { useThemeStore } from "./store/useThemeStore";
+
 import Dashboard from "./pages/Dashboard";
 import Rewards from "./pages/Rewards";
 import Settings from "./pages/Settings";
@@ -14,8 +16,10 @@ import ToastContainer from "./components/ToastContainer";
 import "./App.css";
 
 function App() {
+  const theme = useThemeStore((state) => state.theme);
+
   return (
-    <MantineProvider>
+    <MantineProvider forceColorScheme={theme}>
       <BrowserRouter>
         <ToastContainer />
         <Routes>

@@ -1,7 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
+import { useThemeStore } from "../store/useThemeStore";
 
 function Navbar() {
   const location = useLocation();
+
+  const theme = useThemeStore((state) => state.theme);
+  const toggleTheme = useThemeStore((state) => state.toggleTheme);
 
   const links = [
     { path: "/", label: "Dashboard" },
@@ -27,6 +31,22 @@ function Navbar() {
             {link.label}
           </Link>
         ))}
+
+        <button
+          type="button"
+          className="theme-toggle"
+          onClick={toggleTheme}
+          aria-label={
+            theme === "dark" ? "Switch to light theme" : "Switch to dark theme"
+          }
+          title={
+            theme === "dark" ? "Switch to light theme" : "Switch to dark theme"
+          }
+        >
+          <span className="theme-toggle-icon">
+            {theme === "dark" ? "☀️" : "🌙"}
+          </span>
+        </button>
       </div>
     </nav>
   );
